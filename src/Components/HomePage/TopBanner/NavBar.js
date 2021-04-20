@@ -24,7 +24,10 @@ const NabBar = () => {
                         <Link to="#"><span style={{color:"paleVioletRed"}}>{loggedInUser.displayName}</span></Link>
                         {
                             loggedInUser.email ?
-                                <Button className="navBar-button" onClick={() => setLoggedInUser({})}>Logout</Button>
+                                <Button className="navBar-button" onClick={() =>{
+                                    setLoggedInUser({});
+                                    sessionStorage.removeItem('token')
+                                } }>Logout</Button>
                                 :
                                 <Link to="/login">
                                     <Button className="navBar-button">Login</Button>

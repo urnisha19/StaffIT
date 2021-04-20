@@ -41,7 +41,7 @@ const Login = () => {
                 }
                 setUser(signedInUser);
                 setLoggedInUser(signedInUser);
-                storeAuthToken();
+                // storeAuthToken();
                 history.replace(from);
             })
             .catch((error)=> {
@@ -66,15 +66,16 @@ const Login = () => {
                 console.log('error', error)
             });
     }
+
     // JWT token 
-    const storeAuthToken = () => {
-        firebase.auth().currentUser.getIdToken(true)
-            .then(function (idToken) {
-                sessionStorage.setItem('token', idToken);
-            }).catch(function (error) {
-                // Handle error
-            });
-    }
+    // const storeAuthToken = () => {
+    //     firebase.auth().currentUser.getIdToken(true)
+    //         .then(function (idToken) {
+    //             sessionStorage.setItem('token', idToken);
+    //         }).catch(function (error) {
+    //             // Handle error
+    //         });
+    // }
 
     return (
         <div className="container">

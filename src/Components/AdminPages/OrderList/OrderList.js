@@ -8,8 +8,22 @@ import AdminSideBar from '../AdminSideBar/AdminSideBar';
 
 const OrderList = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-
     const [totalOrderList, setTotalOrderList] = useState([]);
+
+    // const [isAdmin, setIsAdmin] = useState(false);
+    // useEffect(() => {
+    //     if (loggedInUser) {
+    //         fetch('http://localhost:5000/showAllAdmin', {
+    //             method: "POST",
+    //             headers: { 'Content-type': 'application/json' },
+    //             body: JSON.stringify({ email: loggedInUser.email })
+    //         })
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 setIsAdmin(data)
+    //             })
+    //     }
+    // }, [])
 
     useEffect(() => {
         fetch(`http://localhost:5000/admin/orderList`)
@@ -59,39 +73,45 @@ const OrderList = () => {
                                 <h6>Status</h6>
                             </div>
                         </div>
-                        {
-                            totalOrderList.length === 0 && <div className="d-flex justify-content-center">
-                                <img src={loading} alt="loading" className="mt-3 w-25"/>
-                            </div>
-                        }
-                        {
-                            totalOrderList.map(service =>
-                                <div className="service-list-items" key={service._id}>
-                                    <div className="row bg-white pt-1 border-bottom">
-                                        <div className="col-md-2">
-                                            <p>{service.name}</p>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <p>{service.email}</p>
-                                        </div>
-                                        <div className="col-md-2">
-                                            <p>{service.service}</p>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <p>{service.payWith}</p>
-                                        </div>
-                                        <div className="col-md-2">
-                                            <div>
-                                                <select id="status" name="status" style={{ border: '0' }}>
-                                                    <option value="pending" className="text-danger">Pending</option>
-                                                    <option value="done" className="text-success">Done</option>
-                                                    <option value="ongoing" className="text-warning">On going</option>
-                                                </select>
+                        {/* {!isAdmin && <h4 className="text-danger">Sorry! You are not admin. </h4>}
+                        {isAdmin && */}
+                            <div>
+                                {
+                                    totalOrderList.length === 0 && <div className="d-flex justify-content-center">
+                                        <img src={loading} alt="loading" className="mt-3 w-25" />
+                                    </div>
+                                }
+                                {
+                                    totalOrderList.map(service =>
+                                        <div className="service-list-items" key={service._id}>
+                                            <div className="row bg-white pt-1 border-bottom">
+                                                <div className="col-md-2">
+                                                    <p>{service.name}</p>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <p>{service.email}</p>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <p>{service.service}</p>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <p>{service.payWith}</p>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <div>
+                                                        <select id="status" name="status" style={{ border: '0' }}>
+                                                            <option value="pending" className="text-danger">Pending</option>
+                                                            <option value="done" className="text-success">Done</option>
+                                                            <option value="ongoing" className="text-warning">On going</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>)
-                        }
+                                    )
+                                }
+                            </div>
+                        {/* } */}
                     </div>
                 </div>
             </div>
