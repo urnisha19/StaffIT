@@ -13,7 +13,7 @@ const OrderList = () => {
     // const [isAdmin, setIsAdmin] = useState(false);
     // useEffect(() => {
     //     if (loggedInUser) {
-    //         fetch('http://localhost:5000/showAllAdmin', {
+    //         fetch('https://glacial-bayou-10112.herokuapp.com/showAllAdmin', {
     //             method: "POST",
     //             headers: { 'Content-type': 'application/json' },
     //             body: JSON.stringify({ email: loggedInUser.email })
@@ -26,7 +26,7 @@ const OrderList = () => {
     // }, [])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/admin/orderList`)
+        fetch(`https://glacial-bayou-10112.herokuapp.com/admin/orderList`)
             .then(res => res.json())
             .then(data => {
                 setTotalOrderList(data);

@@ -14,7 +14,7 @@ const AddService = () => {
     // const [isAdmin, setIsAdmin] = useState(false);
     // useEffect(() => {
     //     if (loggedInUser) {
-    //         fetch('http://localhost:5000/showAllAdmin', {
+    //         fetch('https://glacial-bayou-10112.herokuapp.com/showAllAdmin', {
     //             method: "POST",
     //             headers: { 'Content-type': 'application/json' },
     //             body: JSON.stringify({ email: loggedInUser.email })
@@ -42,7 +42,7 @@ const AddService = () => {
             formData.append('title', addServiceInfo.title)
             formData.append('description', addServiceInfo.description)
 
-            fetch('http://localhost:5000/admin/addService', {
+            fetch('https://glacial-bayou-10112.herokuapp.com/admin/addService', {
                 method: 'POST',
                 body: formData
             })

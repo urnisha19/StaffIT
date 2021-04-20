@@ -5,7 +5,7 @@ import loading from '../../../images/loading.gif';
 const Reviews = () => {
     const [reviewData, setReviewData] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/review`)
+        fetch(`https://glacial-bayou-10112.herokuapp.com/review`)
             .then(res => res.json())
             .then(data => {
                 setReviewData(data);

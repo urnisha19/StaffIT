@@ -12,7 +12,7 @@ const MakeAdmin = () => {
     // const [isAdmin, setIsAdmin] = useState(false);
     // useEffect(() => {
     //     if (loggedInUser) {
-    //         fetch('http://localhost:5000/showAllAdmin', {
+    //         fetch('https://glacial-bayou-10112.herokuapp.com/showAllAdmin', {
     //             method: "POST",
     //             headers: { 'Content-type': 'application/json' },
     //             body: JSON.stringify({ email: loggedInUser.email })
@@ -27,7 +27,7 @@ const MakeAdmin = () => {
 
     const onSubmit = (data) => {
         console.log(data);
-        fetch('http://localhost:5000/admin/makeAdmin', {
+        fetch('https://glacial-bayou-10112.herokuapp.com/admin/makeAdmin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)

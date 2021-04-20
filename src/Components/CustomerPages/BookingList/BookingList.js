@@ -12,7 +12,7 @@ const BookingList = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
     useEffect(() => {
-        fetch('http://localhost:5000/order?email=' + loggedInUser.email)
+        fetch('https://glacial-bayou-10112.herokuapp.com/order?email=' + loggedInUser.email)
             .then(res => res.json())
             .then(data => {
                 setBookingListData(data);

@@ -28,7 +28,7 @@ const AddReview = () => {
 
         formData.image = loggedInUser.photoURL;
 
-        fetch('http://localhost:5000/customer/addReview', {
+        fetch('https://glacial-bayou-10112.herokuapp.com/customer/addReview', {
             method: 'POST',
             body: formData
         })
