@@ -1,0 +1,9 @@
+.carousel-bg{
+    background-color: lavender;
+}
+.work-img{
+    height: 200px !important;
+    width: 250px !important;
+    border-radius: .5em;
+    box-shadow: 5px 10px 18px #888888;
+}

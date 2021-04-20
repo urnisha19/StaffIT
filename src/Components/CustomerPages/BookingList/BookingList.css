@@ -1,0 +1,16 @@
+.booking-container .card{
+    border-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+.booking-container .card .card-header{
+    background: transparent;
+    border: 0;
+}
+.booking-container .card .card-text{
+    line-height: 24px;
+    font-size: 15px;
+}
+.booking-card .booking-button{
+    padding:0 20px!important;
+}

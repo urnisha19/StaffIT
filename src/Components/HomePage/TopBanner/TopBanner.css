@@ -1,0 +1,13 @@
+.top-banner{
+    background-color:lavender;
+    height: 130vh;
+    clip-path: polygon(0 0, 100% 0, 100% 80% ,0 100%);
+}
+.top-banner h1{
+    font-weight:700;
+}
+.header-button{
+    background-color: purple;
+    border: none;
+    font-weight: 500;
+}

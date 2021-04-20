@@ -1,0 +1,11 @@
+.contact-area{
+    background-color: rgb(143, 221, 221);
+    margin: 3em;
+}
+.contact-send-button{
+    background-color: palevioletred;
+    color: white;
+    font-weight: 500;
+    border: none;
+    margin-top: 1em;
+}

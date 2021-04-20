@@ -1,0 +1,23 @@
+.footer-area{
+    background-image: url('../../../images/footerBg.jpg');
+    background-size: cover;
+}
+
+.footer-area li{
+    padding-bottom: 10px;
+}
+.footer-area li a{
+    text-decoration: none;
+}
+.social-media .icon{
+    height: 40px;
+    width: 40px;
+    color: purple;
+    border-radius: 50%;
+    border: 1px solid purple;
+    padding: 10px;
+}
+.social-media .active-icon{
+    background-color: purple ;
+    color:white;
+}
