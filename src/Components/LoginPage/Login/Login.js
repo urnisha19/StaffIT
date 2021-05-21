@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import logo from '../../../images/staffIT.png';
 import googleIcon from '../../../images/googleIcon.png'
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -10,7 +10,6 @@ import './Login.css';
 
 const Login = () => {
     const [error, setError] = useState({});
-    const [allAdmin, setAllAdmin] = useState([]);
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
@@ -20,11 +19,12 @@ const Login = () => {
     }
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
+    const [allAdmin, setAllAdmin] = useState([]);
     const checkAdmin = (email) => {
         let isAdmin;
         for (let i = 0; i < allAdmin.length; i++) {
             const element = allAdmin[i];
-            if (element.email === email) {
+            if (element.email == email) {
                 isAdmin = true;
                 break;
             }
@@ -35,12 +35,12 @@ const Login = () => {
         localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
     }
     useEffect(() => {
-        fetch('https://glacial-bayou-10112.herokuapp.com/showAllAdmin')
+        fetch('https://glacial-bayou-10112.herokuapp.com/admin/showAllAdmin')
             .then(res => res.json())
             .then(data => {
                 setAllAdmin(data);
             })
-    }, [])
+    }, []) 
 
     const handleGoogleSignIn = () => {
         firebase.auth().signInWithPopup(googleProvider)
@@ -54,11 +54,11 @@ const Login = () => {
                 history.replace(from);
                 history.go(0);
             })
-            .catch(error => {
+            .catch(error=> {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 setError({ errorCode, errorMessage });
-                console.log(setError);
+                console.log(setError);   
             });
     }
 
@@ -66,12 +66,12 @@ const Login = () => {
         <div className="container">
             <div className="mt-5">
                 <Link to="/home">
-                    <Button style={{ backgroundColor: "paleVioletRed", border: "none", fontWeight: "500" }}>Go Back</Button>
+                    <Button style={{backgroundColor:"paleVioletRed",border:"none",fontWeight:"500"}}>Go Back</Button>
                 </Link>
             </div>
             <div className="text-center">
                 <Link to="/home">
-                    <img src={logo} alt="logo" className="text-center" style={{ width: "60px" }} />
+                    <img src={logo} alt="logo" className="text-center" style={{width:"60px"}} />
                 </Link>
             </div>
             <div className="login-box col-md-6 offset-md-3">

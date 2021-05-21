@@ -12,13 +12,13 @@ const PrivateRouteAdmin = ({ children, ...rest }) => {
         email && isAdmin ? (
           children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location }
-            }}
-          />
-        )
+            <Redirect
+              to={{
+                pathname: "/",
+                state: { from: location }
+              }}
+            />
+          )
       }
     />
   );
