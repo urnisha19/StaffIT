@@ -24,7 +24,7 @@ const Login = () => {
         let isAdmin;
         for (let i = 0; i < allAdmin.length; i++) {
             const element = allAdmin[i];
-            if (element.email == email) {
+            if (element.email === email) {
                 isAdmin = true;
                 break;
             }
@@ -35,7 +35,7 @@ const Login = () => {
         localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
     }
     useEffect(() => {
-        fetch('https://glacial-bayou-10112.herokuapp.com/admin/showAllAdmin')
+        fetch('https://glacial-bayou-10112.herokuapp.com/showAllAdmin')
             .then(res => res.json())
             .then(data => {
                 setAllAdmin(data);
@@ -49,7 +49,6 @@ const Login = () => {
                 console.log('login successfully', result.user);
                 localStorage.setItem("name", JSON.stringify(user.displayName));
                 localStorage.setItem("email", JSON.stringify(user.email));
-                localStorage.setItem("photoURL", JSON.stringify(user.photoURL));
                 checkAdmin(user.email);
                 history.replace(from);
                 history.go(0);
