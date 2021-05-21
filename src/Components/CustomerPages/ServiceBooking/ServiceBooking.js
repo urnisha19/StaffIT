@@ -33,7 +33,7 @@ const ServiceBooking = () => {
                 }
                 setInfo(myInfo);
             });
-    }, [])
+    }, [serviceId, info])
 
     const handleBlur = (e) => {
         const newInfo = { ...info };
@@ -59,7 +59,6 @@ const ServiceBooking = () => {
                 history.go(0);
             });
         e.preventDefault();
-        alert("Added review successfully!");
         JSON.parse(localStorage.removeItem("serviceId"))
     }
 

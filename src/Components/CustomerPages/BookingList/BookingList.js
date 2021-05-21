@@ -18,7 +18,7 @@ const BookingList = () => {
             .then(data => {
                 setBookingListData(data);
             })
-    }, [])
+    }, [email])
 
     return (
         <section className="booking-container">
