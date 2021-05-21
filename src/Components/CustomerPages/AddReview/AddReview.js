@@ -1,17 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { UserContext } from '../../../App';
 import logo from '../../../images/staffIT.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart, faSuitcaseRolling, faCommentAlt } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import CustomerSideBar from '../CustomerSideBar/CustomerSideBar';
 
 const AddReview = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const name = JSON.parse(localStorage.getItem("name"));
+    const photoURL = JSON.parse(localStorage.getItem("photoURL"));
 
-    const { register, errors } = useForm();
-
+    const history = useHistory();
+    const { errors } = useForm();
     const [addReviewInfo, setAddReviewInfo] = useState({});
 
     const handleBlur = e => {
@@ -20,25 +18,22 @@ const AddReview = () => {
         setAddReviewInfo(newInfo);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         const formData = new FormData();
-        formData.append('name', loggedInUser.displayName);
+        formData.append('name', name);
         formData.append('companyName', addReviewInfo.companyName);
         formData.append('description', addReviewInfo.description);
-
-        formData.image = loggedInUser.photoURL;
-
+        formData.append('img', photoURL);
         fetch('https://glacial-bayou-10112.herokuapp.com/customer/addReview', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                history.replace('/');
+                history.go(0);
             })
-            .catch(error => {
-                console.error(error)
-            })
+        e.preventDefault();
         alert("Added review successfully!");
     }
     return (
@@ -54,20 +49,19 @@ const AddReview = () => {
                         <h4 className="text-brand">Review</h4>
                         <div className="profile">
                             <h4>
-                                <img style={{ height: '30px', width: '30px', marginRight: '10px' }} src={loggedInUser.photoURL} alt="" />
-                                {loggedInUser.displayName}
+                                {name}
                             </h4>
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-3 col-3">
-                       <CustomerSideBar/>
+                        <CustomerSideBar />
                     </div>
                     <div className="col-md-9 col-9 container p-4" style={{ backgroundColor: '#E5E5E5' }}>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <input name="name" type="text" value={loggedInUser.displayName} placeholder="Name" className="form-control" required="true" />
+                                <input name="name" type="text" value={name} placeholder="Name" className="form-control" required="true" />
                                 {errors.name && <span className="text-danger">This field is required</span>}
                             </div>
                             <div className="form-group">

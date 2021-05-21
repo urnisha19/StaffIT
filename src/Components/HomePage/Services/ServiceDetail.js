@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './ServiceDetail.css';
 
 const ServiceDetail = ({ service }) => {
+    const history = useHistory();
+
+    const handleOrder = () => {
+        localStorage.setItem("serviceId", JSON.stringify(service._id));
+        history.replace('/customer/serviceBooking');
+    }
+
     return (
         <div className="col-md-4 py-md-5 my-md-3 text-center rounded serviceDetail">
-            <Link to="/customer/serviceBooking">
+            <div onClick={handleOrder} >
                 {
                     service.image ?
                         <img style={{ height: '80px' }} src={`data:image/png;base64,${service.image.img}`} alt="service" />
@@ -14,7 +21,7 @@ const ServiceDetail = ({ service }) => {
                 }
                 <h5 className="my-3">{service.title}</h5>
                 <p className="text-secondary">{service.description}</p>
-            </Link>
+            </div>
         </div>
     );
 };

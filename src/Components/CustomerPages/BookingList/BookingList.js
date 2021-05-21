@@ -1,23 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../../App';
+import React, { useEffect, useState } from 'react';
 import logo from '../../../images/staffIT.png';
 import { Link } from 'react-router-dom';
+import loading from '../../../images/loading.gif';
 import bookingImg from '../../../images/booking.png';
 import './BookingList.css';
 import CustomerSideBar from '../CustomerSideBar/CustomerSideBar';
 
-
 const BookingList = () => {
+    const name = JSON.parse(localStorage.getItem("name"));
+    const email = JSON.parse(localStorage.getItem("email"));
+
     const [BookingListData, setBookingListData] = useState([]);
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
     useEffect(() => {
-        fetch('https://glacial-bayou-10112.herokuapp.com/order?email=' + loggedInUser.email)
+        fetch('https://glacial-bayou-10112.herokuapp.com/order?email=' + email)
             .then(res => res.json())
             .then(data => {
                 setBookingListData(data);
             })
     }, [])
+
     return (
         <section className="booking-container">
             <div className="container">
@@ -31,18 +33,23 @@ const BookingList = () => {
                         <h4 className="text-brand">Booking List</h4>
                         <div className="profile">
                             <h4>
-                                <img style={{ height: '30px', width: '30px', marginRight: '10px' }} src={loggedInUser.photoURL} alt="" />
-                                {loggedInUser.displayName}
+                                {name}
                             </h4>
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-3 col-3">
-                       <CustomerSideBar/>
+                        <CustomerSideBar />
                     </div>
                     <div className="col-md-9 col-9 container p-4" style={{ backgroundColor: '#E5E5E5' }}>
                         <div className="row d-flex justify-content-between booking-card">
+                            {
+                                BookingListData.length === 0 && <div className="text-center">
+                                    <h4>You have no bookings!</h4>
+                                    <img src={loading} alt="loading" className="mt-3 w-25" />
+                                </div>
+                            }
                             {
                                 BookingListData.map(service =>
                                     <div className="card col-md-5 my-2" key={service._id}>
@@ -51,8 +58,8 @@ const BookingList = () => {
                                             <h6 className="pt-3 px-3 rounded" style={{ backgroundColor: '#FFE3E3', color: '#FF4545' }}>Pending</h6>
                                         </div>
                                         <div className="card-body">
-                                            <h6 className="card-text font-weight-bold">{service.serviceName}</h6>
-                                            <p className="card-text text-secondary">{service.projectDetails}</p>
+                                            <h6 className="card-text font-weight-bold">{service.service}</h6>
+                                            <p className="card-text text-success">Order Id: {service._id}</p>
                                         </div>
                                     </div>
                                 )

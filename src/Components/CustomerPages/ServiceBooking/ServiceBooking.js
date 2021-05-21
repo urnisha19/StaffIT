@@ -1,42 +1,66 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { UserContext } from '../../../App';
 import logo from '../../../images/staffIT.png';
 import { Link, useHistory } from 'react-router-dom';
 import CustomerSideBar from '../CustomerSideBar/CustomerSideBar';
-import ProcessPayment from './ProcessPayment/ProcessPayment';
-
+// import ProcessPayment from './ProcessPayment/ProcessPayment';
 
 const ServiceBooking = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    const { register, handleSubmit, errors } = useForm();
-    const [services, setServices] = useState();
+    const name = JSON.parse(localStorage.getItem("name"));
+    const email = JSON.parse(localStorage.getItem("email"));
+    const serviceId = JSON.parse(localStorage.getItem("serviceId"));
+
     const history = useHistory();
+    const [orderService, setOrderService] = useState({});
+    const [services, setServices] = useState();
+    const { errors } = useForm();
+    const [info, setInfo] = useState({
+        name: name,
+        email: email,
+        // status: 'Pending',
+    });
 
     useEffect(() => {
-        fetch('https://glacial-bayou-10112.herokuapp.com/services', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(result => {
-                setServices(result)
-            })
+        fetch('https://glacial-bayou-10112.herokuapp.com/services')
+            .then(res => res.json())
+            .then(data => {
+                const myService = data.find(e => e._id === serviceId);
+                setOrderService(myService);
+                setServices(data);
+                const myInfo = { ...info };
+                if (myService) {
+                    myInfo.service = myService.title;
+                }
+                setInfo(myInfo);
+            });
     }, [])
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const handleBlur = (e) => {
+        const newInfo = { ...info };
+        newInfo[e.target.name] = e.target.value;
+        setInfo(newInfo);
+    }
+
+    const handleSubmit = (e) => {
+        const formData = new FormData();
+        formData.append('name', info.name);
+        formData.append('email', info.email);
+        formData.append('service', info.service);
+        // formData.append('price', info.price);
+        // formData.append('status', info.status);
         fetch('https://glacial-bayou-10112.herokuapp.com/customer/serviceBooking', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData
         })
             .then(res => res.json())
             .then(data => {
                 alert("Order Added successfully!");
-                history.push("/customer/bookingList");
-                console.log(data);
-                console.log('posted');
-            })
+                history.replace('/');
+                history.go(0);
+            });
+        e.preventDefault();
+        alert("Added review successfully!");
+        JSON.parse(localStorage.removeItem("serviceId"))
     }
 
     return (
@@ -52,8 +76,7 @@ const ServiceBooking = () => {
                         <h4 className="text-brand">Service Booking</h4>
                         <div className="profile">
                             <h4>
-                                <img style={{ height: '30px', width: '30px', marginRight: '10px' }} src={loggedInUser.photoURL} alt="" />
-                                {loggedInUser.displayName}
+                                {name}
                             </h4>
                         </div>
                     </div>
@@ -63,20 +86,28 @@ const ServiceBooking = () => {
                         <CustomerSideBar />
                     </div>
                     <div className="col-md-9 col-9 container p-4" style={{ backgroundColor: '#E5E5E5' }}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <input defaultValue={loggedInUser.displayName} name="name" type="text" placeholder="Name" className="form-control" ref={register({ required: true })} />
+                                <input className="form-control" type="text" placeholder="Your name" name="name" value={name} required />
                                 {errors.name && <span className="text-danger">This field is required</span>}
                             </div>
                             <div className="form-group">
-                                <input defaultValue={loggedInUser.email} type="text" name="email" placeholder="Email" className="form-control" ref={register({ required: true })} />
+                                <input className="form-control" type="email" placeholder="Your email address" name="email" value={email} required />
                                 {errors.email && <span className="text-danger">This field is required</span>}
                             </div>
                             <div className="form-group mt-3">
-                                <select name="service" ref={register({ required: true })} className="form-control mb-3" >
-                                    <option >Select our service</option>
-                                    {services && services.map(item => <option value={item._id}>{item.title} </option>)}
-                                </select>
+                                {
+                                    orderService ? <input onBlur={handleBlur} name="service" className="form-control" type="text" placeholder="Service Name"
+                                        value={orderService && orderService.title} required />
+                                        :
+                                        <select onBlur={handleBlur} name="service" className="form-control" required>
+                                            <option >Select our service</option>
+                                            {services && services.map(item => <option value={item.title}>{item.title} </option>)}
+                                        </select>
+                                }
+                            </div>
+                            {/* <div className="form-group">
+                            <input onBlur={handleBlur} className="form-control" type="number" name='price' placeholder="Price" required /><br />
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6 mt-3">
@@ -87,9 +118,9 @@ const ServiceBooking = () => {
                                 <div className="form-group col-md-6 mt-5">
                                     <ProcessPayment />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="form-group">
-                                <button type="submit" className="btn btn-success mt-3">Send</button>
+                                <input type="submit" value="Send" className="btn btn-success mt-3" />
                             </div>
                         </form>
                     </div>
